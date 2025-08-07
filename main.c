@@ -21,7 +21,7 @@ struct Complaint {
     char status[20]; // Pending, Resolved
 };
 
-// Function Prototypes
+// Function methods
 void addStudent();
 void updateStudent();
 void deleteStudent();
@@ -83,10 +83,14 @@ void addStudent() {
         return;
     }
 
-    printf("Enter ID: "); scanf("%d", &s.id);
-    printf("Enter Name: "); scanf(" %[^]", s.name);
-    printf("Enter Email: "); scanf("%s", s.email);
-    printf("Enter Age: "); scanf("%d", &s.age);
+    printf("Enter ID: "); 
+    scanf("%d", &s.id);
+    printf("Enter Name: "); 
+    scanf(" %[^]", s.name);
+    printf("Enter Email: "); 
+    scanf("%s", s.email);
+    printf("Enter Age: "); 
+    scanf("%d", &s.age);
 
     showRoomStatus();
     do {
@@ -120,11 +124,16 @@ void updateStudent() {
     while (fscanf(fp, "%d,%49[^,],%49[^,],%d,%d,%d\n", &s.id, s.name, s.email, &s.age, &s.room_number, &s.fee_paid) == 6) {
         if (s.id == id) {
             found = 1;
-            printf("Enter New Name: "); scanf(" %[^]", s.name);
-            printf("Enter New Email: "); scanf("%s", s.email);
-            printf("Enter New Age: "); scanf("%d", &s.age);
-            printf("Enter New Room: "); scanf("%d", &s.room_number);
-            printf("Fee Paid? (1 = Yes, 0 = No): "); scanf("%d", &s.fee_paid);
+            printf("Enter New Name: "); 
+            scanf(" %[^]", s.name);
+            printf("Enter New Email: "); 
+            scanf("%s", s.email);
+            printf("Enter New Age: ");
+            scanf("%d", &s.age);
+            printf("Enter New Room: "); 
+            scanf("%d", &s.room_number);
+            printf("Fee Paid? (1 = Yes, 0 = No): "); 
+            scanf("%d", &s.fee_paid);
         }
         fprintf(temp, "%d,%s,%s,%d,%d,%d\n", s.id, s.name, s.email, s.age, s.room_number, s.fee_paid);
     }
@@ -167,9 +176,6 @@ void allocateRoom() {
     showRoomStatus();
 }
 
-void reallocateRoom() {
-    int id, new_room, found = 0;
-}
 void reallocateRoom() {
     int id, new_room, found = 0;
     struct Student s;
@@ -232,9 +238,12 @@ void reportComplaint() {
         return;
     }
 
-    printf("Enter Student ID: "); scanf("%d", &c.student_id);
-    printf("Enter Issue Type (e.g., Fan, Light, Water): "); scanf(" %[^]", c.issue_type);
-    printf("Enter Description: "); scanf(" %[^]", c.description);
+    printf("Enter Student ID: "); 
+    scanf("%d", &c.student_id);
+    printf("Enter Issue Type (e.g., Fan, Light, Water): "); 
+    scanf(" %[^]", c.issue_type);
+    printf("Enter Description: "); 
+    scanf(" %[^]", c.description);
     strcpy(c.status, "Pending");
 
     fprintf(fp, "%d,%s,%s,%s\n", c.student_id, c.issue_type, c.description, c.status);
