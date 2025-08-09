@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX 100
-#define MAX_ROOMS 100
+#define MAX 2
+#define MAX_ROOMS 2
 
 struct Student {
     int id;
@@ -14,7 +14,7 @@ struct Student {
     int fee_paid; // 1 = Paid, 0 = Not Paid
 };
 
-struct Complaint {
+struct Complain {
     int student_id;
     char issue_type[30];
     char description[100];
@@ -28,19 +28,20 @@ void deleteStudent();
 void allocateRoom();
 void reallocateRoom();
 void trackPayments();
-void reportComplaint();
-void viewComplaints();
+void reportComplain();
+void viewComplains();
 int login();
 int isRoomAvailable(int room);
 void showRoomStatus();
 
 // Global file names
 const char *studentFile = "students.txt";
-const char *complaintFile = "complaints.txt";
+const char *complainFile = "complains.txt";
 
 int main() {
     int choice;
-    if (!login()) {
+    if (!login())
+    {
         printf("\nAccess Denied. Only university emails allowed.\n");
         return 0;
     }
@@ -58,8 +59,8 @@ int main() {
             case 4: allocateRoom(); break;
             case 5: reallocateRoom(); break;
             case 6: trackPayments(); break;
-            case 7: reportComplaint(); break;
-            case 8: viewComplaints(); break;
+            case 7: reportComplain(); break;
+            case 8: viewComplains(); break;
             case 9: printf("Exiting...\n"); break;
             default: printf("Invalid choice. Try again.\n");
         }
@@ -68,14 +69,16 @@ int main() {
     return 0;
 }
 
-int login() {
+int login()
+{
     char email[50];
     printf("Enter university email: ");
     scanf("%s", email);
-    return strstr(email, "@versity.edu") != NULL;
+    return strstr(email, "@diu.edu.bd") != NULL;
 }
 
-void addStudent() {
+void addStudent()
+{
     struct Student s;
     FILE *fp = fopen(studentFile, "a");
     if (!fp) {
@@ -83,21 +86,32 @@ void addStudent() {
         return;
     }
 
-    printf("Enter ID: "); scanf("%d", &s.id);
-    printf("Enter Name: "); scanf(" %[^]", s.name);
-    printf("Enter Email: "); scanf("%s", s.email);
-    printf("Enter Age: "); scanf("%d", &s.age);
+    printf("Enter ID: ");
+    scanf("%d", &s.id);
+    getchar();  // this is use for input skip bug fix(it removes the newline character left in the buffer)
+
+    printf("Enter Name: ");
+    scanf(" %[^\n]", s.name);
+
+    printf("Enter Email: ");
+    scanf(" %s", s.email);  
+
+    printf("Enter Age: ");
+    scanf("%d", &s.age);
+    getchar();  // this is use for input skip bug fix(it removes the newline character left in the buffer)
 
     showRoomStatus();
     do {
         printf("Enter Room Number to allocate: ");
         scanf("%d", &s.room_number);
-        if (!isRoomAvailable(s.room_number)) {
+        if (!isRoomAvailable(s.room_number)) 
+        {
             printf("Room is full. Choose another room.\n");
         }
     } while (!isRoomAvailable(s.room_number));
 
-    printf("Fee Paid? (1 = Yes, 0 = No): "); scanf("%d", &s.fee_paid);
+    printf("Fee Paid? (1 = Yes, 0 = No): ");
+    scanf("%d", &s.fee_paid);
 
     fprintf(fp, "%d,%s,%s,%d,%d,%d\n", s.id, s.name, s.email, s.age, s.room_number, s.fee_paid);
     fclose(fp);
@@ -118,13 +132,19 @@ void updateStudent() {
     scanf("%d", &id);
 
     while (fscanf(fp, "%d,%49[^,],%49[^,],%d,%d,%d\n", &s.id, s.name, s.email, &s.age, &s.room_number, &s.fee_paid) == 6) {
-        if (s.id == id) {
+        if (s.id == id) 
+        {
             found = 1;
-            printf("Enter New Name: "); scanf(" %[^]", s.name);
-            printf("Enter New Email: "); scanf("%s", s.email);
-            printf("Enter New Age: "); scanf("%d", &s.age);
-            printf("Enter New Room: "); scanf("%d", &s.room_number);
-            printf("Fee Paid? (1 = Yes, 0 = No): "); scanf("%d", &s.fee_paid);
+            printf("Enter New Name: "); 
+            scanf(" %[^]", s.name);
+            printf("Enter New Email: "); 
+            scanf("%s", s.email);
+            printf("Enter New Age: "); 
+            scanf("%d", &s.age);
+            printf("Enter New Room: "); 
+            scanf("%d", &s.room_number);
+            printf("Fee Paid? (1 = Yes, 0 = No): "); 
+            scanf("%d", &s.fee_paid);
         }
         fprintf(temp, "%d,%s,%s,%d,%d,%d\n", s.id, s.name, s.email, s.age, s.room_number, s.fee_paid);
     }
@@ -157,7 +177,8 @@ void deleteStudent() {
             fprintf(temp, "%d,%s,%s,%d,%d,%d\n", s.id, s.name, s.email, s.age, s.room_number, s.fee_paid);
     }
 
-    fclose(fp); fclose(temp);
+    fclose(fp);
+    fclose(temp);
     remove(studentFile);
     rename("temp.txt", studentFile);
     printf("Student deleted.\n");
@@ -167,9 +188,6 @@ void allocateRoom() {
     showRoomStatus();
 }
 
-void reallocateRoom() {
-    int id, new_room, found = 0;
-}
 void reallocateRoom() {
     int id, new_room, found = 0;
     struct Student s;
@@ -224,38 +242,54 @@ void trackPayments() {
     fclose(fp);
 }
 
-void reportComplaint() {
-    struct Complaint c;
-    FILE *fp = fopen(complaintFile, "a");
+void reportComplain() {
+    struct Complain c;
+    FILE *fp = fopen(complainFile, "a");
     if (!fp) {
         printf("Error opening file.\n");
         return;
     }
 
-    printf("Enter Student ID: "); scanf("%d", &c.student_id);
-    printf("Enter Issue Type (e.g., Fan, Light, Water): "); scanf(" %[^]", c.issue_type);
-    printf("Enter Description: "); scanf(" %[^]", c.description);
+    printf("Enter Student ID: ");
+    scanf("%d", &c.student_id);
+    getchar(); // clear leftover newline from input buffer
+
+    printf("Enter Issue Type (e.g., Fan, Light, Water): ");
+    fgets(c.issue_type, sizeof(c.issue_type), stdin);
+    c.issue_type[strcspn(c.issue_type, "\n")] = 0; // remove trailing newline
+
+    printf("Enter Description: ");
+    fgets(c.description, sizeof(c.description), stdin);
+    c.description[strcspn(c.description, "\n")] = 0; // remove trailing newline
+
     strcpy(c.status, "Pending");
 
     fprintf(fp, "%d,%s,%s,%s\n", c.student_id, c.issue_type, c.description, c.status);
     fclose(fp);
+
     printf("Complaint reported.\n");
 }
 
-void viewComplaints() {
-    struct Complaint c;
-    FILE *fp = fopen(complaintFile, "r");
+
+void viewComplains() {
+    struct Complain c;
+    FILE *fp = fopen(complainFile, "r");
     if (!fp) {
         printf("Error opening file.\n");
         return;
     }
-    printf("\nComplaints:\n");
-    while (fscanf(fp, "%d,%[^,],%[^,],%[^\n]\n", &c.student_id, c.issue_type, c.description, c.status) == 4) {
-        printf("Student ID: %d, Issue: %s, Status: %s\nDescription: %s\n\n",
-               c.student_id, c.issue_type, c.status, c.description);
+
+    printf("\nComplains:\n");
+    // size limits match struct array sizes: 49, 199, 19
+    while (fscanf(fp, "%d,%49[^,],%199[^,],%19[^\n]", 
+                  &c.student_id, c.issue_type, c.description, c.status) == 4) {
+        printf("Student ID: %d\nIssue: %s\nDescription: %s\nStatus: %s\n\n",
+               c.student_id, c.issue_type, c.description, c.status);
     }
+
     fclose(fp);
 }
+
 
 int isRoomAvailable(int room) {
     struct Student s;
