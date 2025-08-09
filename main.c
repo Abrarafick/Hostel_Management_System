@@ -21,7 +21,7 @@ struct Complain {
     char status[20]; // Pending, Resolved
 };
 
-// Function Prototypes
+// Function methods
 void addStudent();
 void updateStudent();
 void deleteStudent();
@@ -86,6 +86,7 @@ void addStudent()
         return;
     }
 
+<<<<<<< HEAD
     printf("Enter ID: ");
     scanf("%d", &s.id);
     getchar();  // this is use for input skip bug fix(it removes the newline character left in the buffer)
@@ -99,6 +100,16 @@ void addStudent()
     printf("Enter Age: ");
     scanf("%d", &s.age);
     getchar();  // this is use for input skip bug fix(it removes the newline character left in the buffer)
+=======
+    printf("Enter ID: "); 
+    scanf("%d", &s.id);
+    printf("Enter Name: "); 
+    scanf(" %[^]", s.name);
+    printf("Enter Email: "); 
+    scanf("%s", s.email);
+    printf("Enter Age: "); 
+    scanf("%d", &s.age);
+>>>>>>> e226f47fd58eb1d0f857dff14b69b6afc98f5865
 
     showRoomStatus();
     do {
@@ -138,8 +149,10 @@ void updateStudent() {
             printf("Enter New Name: "); 
             scanf(" %[^]", s.name);
             printf("Enter New Email: "); 
-            scanf("%s", s.email);
-            printf("Enter New Age: "); 
+
+
+            printf("Enter New Age: ");
+
             scanf("%d", &s.age);
             printf("Enter New Room: "); 
             scanf("%d", &s.room_number);
@@ -250,6 +263,7 @@ void reportComplain() {
         return;
     }
 
+
     printf("Enter Student ID: ");
     scanf("%d", &c.student_id);
     getchar(); // clear leftover newline from input buffer
@@ -262,6 +276,13 @@ void reportComplain() {
     fgets(c.description, sizeof(c.description), stdin);
     c.description[strcspn(c.description, "\n")] = 0; // remove trailing newline
 
+
+    printf("Enter Student ID: "); 
+    scanf("%d", &c.student_id);
+    printf("Enter Issue Type (e.g., Fan, Light, Water): "); 
+    scanf(" %[^]", c.issue_type);
+    printf("Enter Description: "); 
+    scanf(" %[^]", c.description);
     strcpy(c.status, "Pending");
 
     fprintf(fp, "%d,%s,%s,%s\n", c.student_id, c.issue_type, c.description, c.status);
