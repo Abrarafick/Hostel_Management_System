@@ -86,7 +86,7 @@ void addStudent()
         return;
     }
 
-<<<<<<< HEAD
+
     printf("Enter ID: ");
     scanf("%d", &s.id);
     getchar();  // this is use for input skip bug fix(it removes the newline character left in the buffer)
@@ -100,7 +100,7 @@ void addStudent()
     printf("Enter Age: ");
     scanf("%d", &s.age);
     getchar();  // this is use for input skip bug fix(it removes the newline character left in the buffer)
-=======
+
     printf("Enter ID: "); 
     scanf("%d", &s.id);
     printf("Enter Name: "); 
@@ -109,7 +109,6 @@ void addStudent()
     scanf("%s", s.email);
     printf("Enter Age: "); 
     scanf("%d", &s.age);
->>>>>>> e226f47fd58eb1d0f857dff14b69b6afc98f5865
 
     showRoomStatus();
     do {
