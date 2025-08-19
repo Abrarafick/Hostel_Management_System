@@ -1,0 +1,2 @@
+242-35-330,Fan,Fan is not working,Pending
+242-35-35,Fan,Fan is not good,Pending
